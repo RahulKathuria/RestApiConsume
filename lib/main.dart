@@ -17,7 +17,6 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  
   List<DropdownMenuItem> dropDownList = new List();
 
   String result = "Hello";
@@ -35,7 +34,12 @@ class _HomepageState extends State<Homepage> {
   void initState() {
     for (int i = 1; i <= 100; i++) {
       dropDownList.add(DropdownMenuItem(
-        child: Padding(padding:EdgeInsets.only(left:10),child: Text(i.toString(),style: TextStyle(color: Colors.black),)),
+        child: Padding(
+            padding: EdgeInsets.only(left: 10),
+            child: Text(
+              i.toString(),
+              style: TextStyle(color: Colors.black),
+            )),
         value: i,
       ));
     }
@@ -53,16 +57,18 @@ class _HomepageState extends State<Homepage> {
           SizedBox(
             height: 50,
           ),
-          Expanded( child: Text(result,style: TextStyle(
-            fontSize: 20,
-            fontWeight:FontWeight.bold,
-            color: Colors.blue
-          ),)),
+          Expanded(
+              child: Text(
+            result,
+            style: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blue),
+          )),
           Expanded(
               flex: 1,
-              child:Column(
+              child: Column(
                 children: <Widget>[
-                  Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       Container(
                         decoration: BoxDecoration(
@@ -72,14 +78,19 @@ class _HomepageState extends State<Homepage> {
                         child: DropdownButton(
                             value: _value,
                             items: [
-                              
                               DropdownMenuItem(
-                                child: Padding(padding:EdgeInsets.only(left:10),
-                                child: Text("Male",style: TextStyle(color: Colors.black),)),
+                                child: Padding(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Text(
+                                      "Male",
+                                      style: TextStyle(color: Colors.black),
+                                    )),
                                 value: "M",
                               ),
                               DropdownMenuItem(
-                                child: Padding(padding:EdgeInsets.only(left:10),child: Text("Female")),
+                                child: Padding(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Text("Female")),
                                 value: "F",
                               )
                             ],
@@ -95,7 +106,7 @@ class _HomepageState extends State<Homepage> {
                             color: Colors.cyan,
                             border: Border.all()),
                         child: DropdownButton(
-                            value:numberValue,
+                            value: numberValue,
                             items: dropDownList,
                             onChanged: (value) {
                               setState(() {
@@ -105,12 +116,32 @@ class _HomepageState extends State<Homepage> {
                       )
                     ],
                   ),
-                  
                 ],
               )),
-              Expanded(child: TextField(
-                    controller: myController,
-                  ))
+          Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+            controller: myController,
+          ),
+              )),
+          Expanded(
+            
+            child:Container(
+                          child: Align(
+                alignment: Alignment.center,
+                            child: Container(
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  height: MediaQuery.of(context).size.height * 0.1,
+           
+                  child: RaisedButton(
+                      textColor: Colors.black,
+                      child: Text("Submit"),
+                      onPressed: () {}),
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );

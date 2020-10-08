@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+
+import 'package:http/http.dart' as http;
 
 void main() => runApp(MyApp());
 
@@ -16,7 +20,32 @@ class Homepage extends StatefulWidget {
   _HomepageState createState() => _HomepageState();
 }
 
+class Eli {
+  var m;
+  var v;
+  var message;
+
+  Eli(this.m, this.v, this.message);
+
+  Eli.fromJson(Map<String, dynamic> json)
+      : m = json['m'],
+        v = json['v'],
+        message = json['message'];
+}
+
 class _HomepageState extends State<Homepage> {
+  Future<void> getData() async {
+    var res = await http.post("https://test-1q.herokuapp.com/check",
+        body: jsonEncode(
+            {"name": myController.text, "age": numberValue, "gender": _value}),
+        headers: {"content-type": "application/json"});
+    var el = json.decode(res.body);
+    setState(() {
+      Eli eli = Eli.fromJson(el);
+      result = eli.message;
+    });
+  }
+
   List<DropdownMenuItem> dropDownList = new List();
 
   String result = "Hello";
@@ -120,24 +149,22 @@ class _HomepageState extends State<Homepage> {
               )),
           Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-            controller: myController,
-          ),
-              )),
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: myController,
+            ),
+          )),
           Expanded(
-            
-            child:Container(
-                          child: Align(
+            child: Container(
+              child: Align(
                 alignment: Alignment.center,
-                            child: Container(
+                child: Container(
                   width: MediaQuery.of(context).size.width * 0.5,
                   height: MediaQuery.of(context).size.height * 0.1,
-           
                   child: RaisedButton(
                       textColor: Colors.black,
                       child: Text("Submit"),
-                      onPressed: () {}),
+                      onPressed: getData),
                 ),
               ),
             ),
